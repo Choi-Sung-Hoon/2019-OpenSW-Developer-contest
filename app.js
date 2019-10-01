@@ -13,7 +13,6 @@
  * @date 2016-11-10
  * @author Mike
  */
-var fs = require('fs');
 // Express 기본 모듈 불러오기
 var express = require('express')
   , http = require('http')
