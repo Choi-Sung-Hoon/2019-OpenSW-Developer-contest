@@ -13,6 +13,7 @@
  * @date 2016-11-10
  * @author Mike
  */
+
 // Express 기본 모듈 불러오기
 var express = require('express')
   , http = require('http')
@@ -137,7 +138,8 @@ router.route('/process/login').post(function(req, res) {
 // 3000번 포트로 접속했을때 기본 index 페이지로 라우팅
 router.get('/', function(req, res) {
 	res.redirect('/public/index.html');
-	/*
+
+  /*
 	fs.readFile(__dirname+'/public/index.html',function(error, data) {
 		if(error) {
 			console.log(error);
@@ -147,6 +149,7 @@ router.get('/', function(req, res) {
 		}
 	});
 	*/
+
 });
 
 
