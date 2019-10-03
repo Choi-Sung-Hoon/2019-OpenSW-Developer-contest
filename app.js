@@ -1,4 +1,4 @@
-/*eslint-disable no-console*/
+﻿/*eslint-disable no-console*/
 /*eslint no-undef: "error"*/
 /*eslint-env node*/
 
