@@ -1,4 +1,4 @@
-/*eslint-disable no-console*/
+﻿/*eslint-disable no-console*/
 /*eslint no-undef: "error"*/
 /*eslint-env node*/
 
@@ -102,11 +102,11 @@ router.route('/login').get(function(req, res) {
 });
 
 // 사용자 인증 - POST로 요청받으면 패스포트를 이용해 인증함
-// 성공 시 /profile로 리다이렉트, 실패 시 /login으로 리다이렉트함
+// 성공 시 /profile로 리다이렉트, 실패 시 인덱스 페이지로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
 router.route('/login').post(passport.authenticate('local-login', {
     successRedirect : '/profile', 
-    failureRedirect : '/', 
+    failureRedirect : '/',		// 인덱스 페이지 리다이렉트 시, 화면 스크롤 조정 필요!
     failureFlash : true 
 }));
 
@@ -204,8 +204,8 @@ passport.use('local-signup', new LocalStrategy({
 	}, function(req, email, password, done) {
         // 요청 파라미터 중 name 파라미터 확인
 	var paramName = req.body.name || req.query.name;
-	
-	console.log('passport의 local-signup 호출됨 : ' + email + ', ' + password + ', ' + paramName);
+	var paramClass = req.body.occup || req.query.occup;
+	console.log('passport의 local-signup 호출됨 : ' + email + ', ' + password + ', ' + paramName + ', ' + paramClass);
 	
 	// findOne 메소드가 blocking되지 않도록 하고 싶은 경우, async 방식으로 변경
 	process.nextTick(function() {
@@ -222,7 +222,7 @@ passport.use('local-signup', new LocalStrategy({
 				return done(null, false, req.flash('signupMessage', '계정이 이미 존재합니다'));  // 검증 콜백에서 두 번째 파라미터의 값을 false로 하여 인증 실패한 것으로 처리
 			} else {
 				// 모델 인스턴스 객체 만들어 저장
-				var user = new database.UserModel({'email':email, 'password':password, 'name':paramName});
+				var user = new database.UserModel({'email':email, 'password':password, 'name':paramName, 'classCode':paramClass});
 				user.save(function(err) {
 					if (err) {
 						throw err;
