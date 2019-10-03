@@ -14,23 +14,24 @@ Schema.createSchema = function(mongoose) {
 	// 스키마 정의
 	var UserSchema = mongoose.Schema({
 		email: {type: String, 'default':''}
-	    , hashed_password: {type: String, required: true, 'default':''}
-	    , name: {type: String, index: 'hashed', 'default':''}
-	    , salt: {type:String, required:true}
-	    , created_at: {type: Date, index: {unique: false}, 'default': Date.now}
-	    , updated_at: {type: Date, index: {unique: false}, 'default': Date.now} 
+		, hashed_password: {type: String, required: true, 'default':''}
+		, name: {type: String, index: 'hashed', 'default':''}
+		, salt: {type:String, required:true}
+		, created_at: {type: Date, index: {unique: false}, 'default': Date.now}
+		, updated_at: {type: Date, index: {unique: false}, 'default': Date.now} 
+		, classCode: {type: String, 'default':'대학생'}
 	});
 	
 	// password를 virtual 메소드로 정의 : MongoDB에 저장되지 않는 편리한 속성임. 특정 속성을 지정하고 set, get 메소드를 정의함
 	UserSchema
-	  .virtual('password')
-	  .set(function(password) {
-	    this._password = password;
-	    this.salt = this.makeSalt();
-	    this.hashed_password = this.encryptPassword(password);
-	    console.log('virtual password 호출됨 : ' + this.hashed_password);
-	  })
-	  .get(function() { return this._password });
+		.virtual('password')
+		.set(function(password) {
+		this._password = password;
+		this.salt = this.makeSalt();
+		this.hashed_password = this.encryptPassword(password);
+		console.log('virtual password 호출됨 : ' + this.hashed_password);
+			})
+		.get(function() { return this._password });
 	
 	// 스키마에 모델 인스턴스에서 사용할 수 있는 메소드 추가
 	// 비밀번호 암호화 메소드
