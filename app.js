@@ -102,11 +102,11 @@ router.route('/login').get(function(req, res) {
 });
 
 // 사용자 인증 - POST로 요청받으면 패스포트를 이용해 인증함
-// 성공 시 /profile로 리다이렉트, 실패 시 /login으로 리다이렉트함
+// 성공 시 /profile로 리다이렉트, 실패 시 인덱스 페이지로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
 router.route('/login').post(passport.authenticate('local-login', {
     successRedirect : '/profile', 
-    failureRedirect : '/', 
+    failureRedirect : '/', 		// 인덱스 페이지 리다이렉트 시, 화면 스크롤 조정 필요!
     failureFlash : true 
 }));
 
