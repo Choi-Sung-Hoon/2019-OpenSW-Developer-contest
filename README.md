@@ -1,5 +1,5 @@
 # 대학생과 기업을 위한 투명한 스펙 인증 관리 시스템 	CCMS
-# A candid certification management system for university students and enterprise
+## A candid certification management system for university students and enterprise
 ## 1. 주제에 관하여
 ### 1-1. 주제 선정 배경
 최근 공인들의 공문서 위조와 학력 위조 등의 문제가 사회적으로 대두되고 있다. 소위 스펙이라고 말하는 개인정보들에 대한 인증이 이루어지지 않기 때문이다. 따라서 우리는 공모전이나 대회 등에 대한 수상내역을 인증하고 블록체인을 통해 관리함으로써 스펙 관리의 편의성과 공정성을 제공하고자 한다.
@@ -17,8 +17,8 @@
 + 수상 못했을 경우 -> ‘참여’ 기록
 + 기업의 취업공고에 학생이 지원할 경우 학생은 자신의 기록을 열람 할 수 있는 권한을 준다.
 ## 4. 구성도
-![웹서버와 블록체인 서버간의 interraction]({{site.baseurl}}//1.png)
-![블록체인 내부 네트워크 환경 구성도]({{site.baseurl}}/2.png)
+![웹서버와 블록체인 서버간의 interraction](./image/1.jpg)
+![블록체인 내부 네트워크 환경 구성도](./image/2.jpg)
 
 
 
