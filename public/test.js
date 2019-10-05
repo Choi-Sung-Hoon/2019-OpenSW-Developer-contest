@@ -51,6 +51,12 @@
 	function add_table() {
 		var table_body = $("#table_body");		
 		$.each( data, function(index, row) {
+			// 수상 여부 true/false를 수상/참여로 변환
+			if(row.awarded) {
+				row.awarded = "수상";
+			} else {
+				row.awarded = "참여";
+			}
 			var tr = $("<tr>").appendTo(table_body);
 			$.each(attr, function(i, fieldInfo) {
 				var td = $("<td>").appendTo(tr);
