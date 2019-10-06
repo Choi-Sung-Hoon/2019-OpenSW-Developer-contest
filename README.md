@@ -23,7 +23,7 @@
 
                                              웹서버와 블록체인 서버간의 interraction
                                              
-**<전체 System FLOW>**
+  **<전체 System FLOW>**
 + Web Server <-> Mongo DB : Node JS 기반으로 구성된 Web Server에서 이용자가 Login 기능 호출시 Mongo DB에 있는 회원정보로 비교 검색해 로그인함
 + Web Server –> DB Server : Web Server가 조회 or 등록 기능을 수행시 QLDB와의 매개체인 DB Server에 데이터가 도착함
 + DB Server –> AWS QLDB : DB Server에서 AWS QLDB에 Data를 저장 or 조회 요청한다.
@@ -33,9 +33,9 @@
 
 ![블록체인 내부 환경 구성도](./image/QLDB_Internal_Architecture.png)
 
-                                             블록체인 내부 환경 구성도
+                                               블록체인 내부 환경 구성도
                                              
-**<AWS QLDB 내부 구조>**
+  **<AWS QLDB 내부 구조>**
 + Journal은 연결되어있는 Ledger(분산원장)들의 전체를 뜻한다.
 + 연결되어있는 Ledger블록들의 현재상태 및 변경 History를 저장한다.
 + 이는 암호학적으로 증명되어진다.
