@@ -19,20 +19,23 @@
 + 기업의 취업공고에 학생이 지원할 경우 학생은 자신의 기록을 열람 할 수 있는 권한을 준다.
 
 ## 4. 구성도
-![웹서버와 블록체인 서버간의 interraction](./image/QLDB System Architecture.jpg)
+![웹서버와 블록체인 서버간의 interraction](./image/QLDB_System_Architecture.jpg)
+
                                              웹서버와 블록체인 서버간의 interraction
-**<전체 System FLOW>**
-Web Server <-> Mongo DB : Node JS 기반으로 구성된 Web Server에서 이용자가 Login 기능 호출시 Mongo DB에 있는 회원정보로 비교 검색해 로그인함
-Web Server –> DB Server : Web Server가 조회 or 등록 기능을 수행시 QLDB와의 매개체인 DB Server에 데이터가 도착함
-DB Server –> AWS QLDB : DB Server에서 AWS QLDB에 Data를 저장 or 조회 요청한다.
-AWS QLDB -> DB Server : 조회된 Data또는 등록 성공여부를 DB Server에 JSON 형식으로 전달한다.
-DB Server -> Web Server : 받은 Data를 Web Server에 전달한다.
-Web Server : HTML기반의 Front-End에 해당 Data를 출력한다.
+                                             
+  **<전체 System FLOW>**
++ Web Server <-> Mongo DB : Node JS 기반으로 구성된 Web Server에서 이용자가 Login 기능 호출시 Mongo DB에 있는 회원정보로 비교 검색해 로그인함
++ Web Server –> DB Server : Web Server가 조회 or 등록 기능을 수행시 QLDB와의 매개체인 DB Server에 데이터가 도착함
++ DB Server –> AWS QLDB : DB Server에서 AWS QLDB에 Data를 저장 or 조회 요청한다.
++ AWS QLDB -> DB Server : 조회된 Data또는 등록 성공여부를 DB Server에 JSON 형식으로 전달한다.
++ DB Server -> Web Server : 받은 Data를 Web Server에 전달한다.
++ Web Server : HTML기반의 Front-End에 해당 Data를 출력한다.
 
-![블록체인 내부 환경 구성도](./image/QLDB Internal Architecture.png)
-                                             블록체인 내부 환경 구성도
-**<AWS QLDB 내부 구조>**
-Journal은 연결되어있는 Ledger(분산원장)들의 전체를 뜻한다.
-연결되어있는 Ledger블록들의 현재상태 및 변경 History를 저장한다.
-이는 암호학적으로 증명되어진다.
+![블록체인 내부 환경 구성도](./image/QLDB_Internal_Architecture.png)
 
+                                               블록체인 내부 환경 구성도
+                                             
+  **<AWS QLDB 내부 구조>**
++ Journal은 연결되어있는 Ledger(분산원장)들의 전체를 뜻한다.
++ 연결되어있는 Ledger블록들의 현재상태 및 변경 History를 저장한다.
++ 이는 암호학적으로 증명되어진다.
