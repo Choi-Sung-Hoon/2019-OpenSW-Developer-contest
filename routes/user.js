@@ -28,48 +28,6 @@ var listRecord_uv = function(req, res) {
 
 			if (payloads) {
 				console.dir(payloads); 
- 
-				res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
-                
-                	var data = [
-		{
-			"student_id": "doho",
-			"host_id": "host",
-			"authorizer_id": "Minister",
-			"student_organization": "경북대학교",
-			"contest_title": "공개SW 개발자 대회",
-			"contest_category": "마케팅",
-			"date": "2019-01-01",
-			"project_title": "CCMS",
-			"awarded": true,
-			"prize_name": "장관상"
-		},
-		{
-			"student_id": "seungmin",
-			"host_id": "host",
-			"authorizer_id": "Minister",
-			"student_organization": "경북대학교",
-			"contest_title": "GLOBAL INNOVATOR FESTA",
-			"contest_category": "로봇/인공지능",
-			"date": "2019-12-01",
-			"project_title": "터틀 봇을 이용한 계단오르기",
-			"awarded": true,
-			"prize_name": "2등상"
-		},
-		{
-			"student_id": "suho",
-			"host_id": "NEXON",
-			"authorizer_id": "KimJungJu",
-			"student_organization": "경북대학교",
-			"contest_title": "Nexon 안티치트",
-			"contest_category": "학술/논문",
-			"date": "2018-10-11",
-			"project_title": "NGS 게임가드의 취약점",
-			"awarded": false,
-			"prize_name": "-"
-		}
-	];
-payloads = data;
 				
 				// 뷰 템플레이트를 이용하여 렌더링한 후 전송
 				var context = {payloads:payloads};

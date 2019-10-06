@@ -1,4 +1,4 @@
-﻿/*eslint-disable no-console*/
+/*eslint-disable no-console*/
 /*eslint no-undef: "error"*/
 /*eslint-env node*/
 
@@ -40,9 +40,6 @@ var route_loader = require('./routes/route_loader');
 
 // 익스프레스 객체 생성
 var app = express();
-
-var ready = false;
-var payload;
 
 //===== 뷰 엔진 설정 =====//
 app.set('views', __dirname + '/views');
@@ -138,47 +135,12 @@ router.route('/registerForm').get(function(req, res) {
 	}
 });
 
-// 등록 Form 전부 완성 후, 확인버튼
-router.route('/registerForm_confirm').post(function(req, res){
-	console.log('enter-form 안에서 작동');
-	
-	// 쿼리문을 위한 변수들
-	var student_id = req.body.student_id || req.query.student_id;
-	var host_id = req.user.email;
-	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
-	var student_organization = req.body.student_organization || req.query.student_organization;
-	var contest_title = req.body.contest_title || req.query.contest_title;
-	var contest_category = req.body.contest_category || req.query.contest_category;
-	var date = req.body.date || req.query.date;
-	var project_title = req.body.project_title || req.query.project_title;
-	var awarded = req.body.awarded || req.query.awarded;
-	var prize_name = req.body.prize_name || req.query.prize_name;
-	
-	// insert 폼에 맞게 쿼리문 작성
-	var query = '{"insert":[{"student_id":"'+student_id
-				+'","host_id":"'+host_id
-				+'","authorizer_id":"'+authorizer_id
-				+'","student_organization":"'+student_organization
-				+'","contest_title":"'+contest_title
-				+'","contest_category":"'+contest_category
-				+'","date":"'+date
-				+'","project_title":"'+project_title
-				+'","awarded":"'+awarded
-				+'","prize_name":"'+prize_name + '"}]}';
-	
-	// 쿼리문 출력
-//	console.log(query);
-	// 등록 완료후, 쿼리문 쓰고 프로필 페이지로 이동
-	var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
-    writeData(socket, query);
-	res.redirect('/profile')
-});
 
 // 회원가입 - POST로 요청받으면 패스포트를 이용해 회원가입 유도함
 // 인증 확인 후, 성공 시 /profile 리다이렉트, 실패 시 /signup으로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
 router.route('/signup').post(passport.authenticate('local-signup', {
-    successRedirect : '/', 
+    successRedirect : '/profile', 
     failureRedirect : '/signup', 
     failureFlash : true 
 }));
@@ -209,37 +171,42 @@ router.route('/profile').get(function(req, res) {
 	4. 기업
 	**********************/
     
+    var sessionID;
     
+    if (Array.isArray(req.user)) {
+        sessionID =  req.user[0]._doc;
+    } else {
+        sessionID = req.user;
+    } 
+    
+    var smin = "192.168.43.249";
     console.log('사용자 인증된 상태임.');
+    console.log('이름: '+req.user.name);
+    
 	switch(req.user.classCode) {
 		case "대학생":
-            var query = '{"select_student":[{"student_id":"'+req.user.email+'"}]}';
-            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/student.ejs');
+            var query = '{"select_student":[{"student_id":"'+ req.user.email +'"}]}';
+            var socket = getConnection(9246, "localhost", "default", res, req, 'profile/student.ejs', sessionID);
             writeData(socket, query);
 			break;
 			
 		case "대회주최자":
-			console.log('이름: '+req.user.name);
-            var query = '{"select_host":[{"host_id":"'+req.user.email+'"}]}';
-            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
+            var query = '{"select_host":[{"host_id":"' + req.user.email + '"}]}';
+            var socket = getConnection(9246, "localhost", "default", res, req, 'profile/host.ejs', sessionID);
             writeData(socket, query);
             break;
 			
 		case "시상인증자":
-			console.log('이름: '+req.user.name);
-			if (Array.isArray(req.user)) {
-				res.render('profile/authorizer.ejs', {user: req.user[0]._doc});
-			} else {
-				res.render('profile/authorizer.ejs', {user: req.user});
-			} break;
+            var query = '{"select_authorizer":[{ "authorizer_id":"' + req.user.email + '"}]}';
+            var socket = getConnection(9246, "localhost", "default", res, req, 'profile/authorizer.ejs', sessionID);
+            writeData(socket, query);
+            break;
 			
 		case "기업":
-			console.log('이름: '+req.user.name);
-			if (Array.isArray(req.user)) {
-				res.render('profile/company.ejs', {user: req.user[0]._doc});
-			} else {
-				res.render('profile/company.ejs', {user: req.user});
-			} break;
+			var query = '{"select_student":[{"student_id":"' + req.user.email + '"}]}';
+            var socket = getConnection(9246, "localhost", "company", res, req, 'profile/authorizer.ejs', sessionID);
+            writeData(socket, query);
+            break;
 	}
 
 });
@@ -247,7 +214,6 @@ router.route('/profile').get(function(req, res) {
 // 로그아웃 - 로그아웃 요청 시 req.logout() 호출함
 router.route('/logout').get(function(req, res) {
 	console.log('/logout 패스 요청됨.');
-    
 	req.logout();
 	res.redirect('/');
 });
