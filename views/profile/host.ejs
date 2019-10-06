@@ -78,17 +78,38 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                                <% for (var i =0; i<payloads.length; i++){
+                                    console.log(payloads);
+                                    var sid = payloads[i].student_id;
+                                    var hid = payloads[i].host_id;
+                                    var aid = payloads[i].authorizer_id;
+                                    var sorg = payloads[i].student_organization;
+                                    var ctitle = payloads[i].contest_title;
+                                    var ccat = payloads[i].contest_category;
+                                    var date = payloads[i].date;
+                                    var ptitle = payloads[i].project_title;
+                                    var awarded = payloads[i].awarded;
+                                    var pname = payloads[i].prize_name; 
+                                    
+                                    if(awarded) {
+				                            awarded = "수상";
+			                         } else {
+				                            awarded = "참여";
+			                         }  
+                             %>
                             <tr>
-                                <td class="body-item mbr-fonts-style display-7">2019-09-27</td>
-                                <td class="body-item mbr-fonts-style display-7">공개 SW대회</td>
-                                <td class="body-item mbr-fonts-style display-7">IT/소프트웨어</td>
-                                <td class="body-item mbr-fonts-style display-7">yubina</td>
-                                <td class="body-item mbr-fonts-style display-7">수상</td>
-                                <td class="body-item mbr-fonts-style display-7" style="max-width: 150px;">A candid certification management system for university students and enterprise</td>
+                                <td class="body-item mbr-fonts-style display-7"><%=date %></td>
+                                <td class="body-item mbr-fonts-style display-7"><%=ctitle %></td>
+                                <td class="body-item mbr-fonts-style display-7"><%=ccat %></td>
+                                <td class="body-item mbr-fonts-style display-7"><%=sid %></td>
+                                <td class="body-item mbr-fonts-style display-7"><%=awarded %></td>
+                                <td class="body-item mbr-fonts-style display-7"><%=ptitle %></td>
                                 <td class="body-item mbr-fonts-style display-7">
-                                    <a href="popup:#mbr-popup-2" data-toggle="modal" data-target="#mbr-popup-2" class='btn-primary display-4' style='padding: 6px; margin-right:0.3rem; border-radius: 3px;'>수정하기</a>
+                                    <a class='btn-primary display-4' style='padding: 6px; margin-right:0.3rem; border-radius: 3px;'>자세히 보기</a>
                                 </td>
-                            </tr>
+                            </tr>        
+                                <% } %>
                         </tbody>
                     </table>
                 </div>

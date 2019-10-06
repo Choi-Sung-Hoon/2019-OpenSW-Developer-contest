@@ -5,5 +5,7 @@ module.exports = {
 	    {file:'./user_schema', collection:'users5', schemaName:'UserSchema', modelName:'UserModel'}
 	],
 	route_info: [
+		    //===== User =====//
+			{file:'./user', path:'/listRecord_uv', method:'listRecord_uv', type:'post'}	
 	]
 }

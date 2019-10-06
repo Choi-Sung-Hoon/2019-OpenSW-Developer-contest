@@ -46,7 +46,7 @@
 			"prize_name": "-"
 		}
 	];
-	
+	/*
 	// 추가하는 함수
 	function add_table() {
 		var table_body = $("#table_body");		
@@ -71,3 +71,4 @@
 
 // 강제로 태그 로드시 함수 실행
 var seq = $("#table_body").load(add_table());
+*/
