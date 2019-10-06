@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -5,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v4.10.15, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <link rel="shortcut icon" href="./assets/images/logo2.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../public/assets/images/logo2.png" type="image/x-icon">
     <meta name="description" content="Web Generator Description">
     <title>학생 스펙 등록하기</title>
-    <link rel="stylesheet" href="./assets/web/assets/mobirise-icons/mobirise-icons.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="./assets/tether/tether.min.css">
-    <link rel="stylesheet" href="./assets/dropdown/css/style.css">
-    <link rel="stylesheet" href="./assets/theme/css/style.css">
-    <link rel="preload" as="style" href="./assets/mobirise/css/mbr-additional.css">
-    <link rel="stylesheet" href="./assets/mobirise/css/mbr-additional.css" type="text/css">
+    <link rel="stylesheet" href="../../public/assets/web/assets/mobirise-icons/mobirise-icons.css">
+    <link rel="stylesheet" href="../../public/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/assets/bootstrap/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../../public/assets/bootstrap/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../../public/assets/tether/tether.min.css">
+    <link rel="stylesheet" href="../../public/assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="../../public/assets/theme/css/style.css">
+    <link rel="preload" as="style" href="../../public/assets/mobirise/css/mbr-additional.css">
+    <link rel="stylesheet" href="../../public/assets/mobirise/css/mbr-additional.css" type="text/css">
 </head>
 
 <body>
@@ -48,6 +49,10 @@
                         </a>
                     </li>
                 </ul>
+<<<<<<< Updated upstream:public/registerForm.html
+=======
+                <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-primary-outline display-4" href="/logout">로그아웃</a></div>
+>>>>>>> Stashed changes:views/registerForm.ejs
             </div>
         </nav>
     </section>
@@ -56,33 +61,44 @@
         <div class="container container-table">
             <basefont size=6>
             <!--테이블 시작 -->
+		<form action="/registeration_confirm" method="POST">
             <table>
                 <tr>
                     <th class="head-item mbr-fonts-style display-7">등록 학생 ID</th>
                     <td>
-                        <input id="signup-id" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px; height:18px; display: inline; min-height: 1.5em;">
+                        <input name="student_id" id="signup-id" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px; height:18px; display: inline; min-height: 1.5em;">
                         <a href='' style='cursor:pointer'>조회하기</a>
                     </td>
                     <th class="head-item mbr-fonts-style display-7">학생 소속</th>
                     <td class="s">
-                        <input id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
+                        <input name="student_organization" id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
                             height:18px; min-height: 1.5em; display: inline; ">
+                    </td>
+					<th class="head-item mbr-fonts-style display-7">주최자</th>
+                    <td class="s">
+                        <input name="host_id" id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
+                            height:18px; min-height: 1.5em; display: inline; " value="<%=user.email%>">
                     </td>
                 </tr>
                 <tr>
                     <th class="head-item mbr-fonts-style display-7">수상/참여</th>
                     <td class="s">
+<<<<<<< Updated upstream:public/registerForm.html
                         <input type="radio" name="chk_mail" checked>참여
                         <input type="radio" name="chk_mail" value="4">수상
+=======
+                        <input type="radio" name="awarded" value="true">수상
+                        <input type="radio" name="awarded" checked value="false">참여
+>>>>>>> Stashed changes:views/registerForm.ejs
                     </td>
                     <th class="head-item mbr-fonts-style display-7">상 이름</th>
                     <td class="s">
-                        <input id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
+                        <input name="prize_name" id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
                                               height:18px; min-height: 1.5em; ">
                     </td>
                     <th class="head-item mbr-fonts-style display-7">시상자 ID</th>
                     <td class="s">
-                        <input id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
+                        <input name="authorizer_id" id="signup-name" type="text" class="form-control dark" required="required" style="border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(152, 152, 152); color: rgb(152, 152, 152); width:150px;
                             height:18px; min-height: 1.5em; display: inline; ">
                         <a href='' style='cursor:pointer'>조회하기</a>
                     </td>
@@ -138,6 +154,7 @@
                     </td>
                 </tr>
             </table>
+		</form>
             <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <script>
             $(document).ready(function() {
@@ -165,15 +182,9 @@
                 });
             });
             </script>
-            </td>
-            </tr>
-            </table>
             </basefont>
         </div>
     </section>
-</body>
-
-</html>
 </body>
 
 </html>

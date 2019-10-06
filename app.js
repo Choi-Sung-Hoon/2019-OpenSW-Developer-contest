@@ -34,11 +34,49 @@ var database = require('./database/database');
 // 모듈로 분리한 라우팅 파일 불러오기
 var route_loader = require('./routes/route_loader');
 
- 
-
-
 // 익스프레스 객체 생성
 var app = express();
+
+var ready = false;
+var payload;
+/******* TCP 클라이언트 init *******/
+
+var net = require('net');
+
+// 서버 5000번 포트로 접속
+var socket = net.connect({port:2227, host:'192.168.43.249'});
+//var socket = net.connect({port : 5000});
+socket.on('connect', function(){
+	console.log('////////////////////////');
+	console.log('connected to TCP server!');
+	console.log('////////////////////////');
+	// 1000ms의 간격으로 문자열을 서버로 요청
+//	setInterval(function(){
+//	socket.write('{"insert":[{"student_id": "zxcv123","host_id": "qweasd","authorizer_id": "asdf123","student_organization": "asdf","contest_title": "Block_adfqwe","contest_category": "software/develop","date": "2019-01-01","project_title":"projectSH","awarded": "true","prize_name": "first"}]}');
+//	socket.write('{"select_student":[{"student_id":"stee123"}]}');
+//	socket.write('{"select_authorizer":[{ "authorizer_id": "qwe123" } ]}');
+//	}, 1000);
+});
+// 서버로부터 받은 데이터를 화면에 출력
+socket.on('data', function(chunk){
+	payload = chunk;
+	console.log('데이터가 도착했습니다.');
+//	ready = true;
+	console.log('recv:' + chunk);
+});
+// 접속이 종료됬을때 메시지 출력
+socket.on('end', function(){
+	console.log('disconnected.');
+});
+// 에러가 발생할때 에러메시지 화면에 출력
+socket.on('error', function(err){
+	console.log(err);
+});
+// connection에서 timeout이 발생하면 메시지 출력
+socket.on('timeout', function(){
+	console.log('connection timeout.');
+});
+
 
 
 //===== 뷰 엔진 설정 =====//
@@ -116,14 +154,40 @@ router.route('/signup').get(function(req, res) {
 	res.render('signup.ejs', {message: req.flash('signupMessage')});
 });
 
+// 대회 Form 등록 요청시 대회 등록 화면으로
+router.route('/registerForm').get(function(req, res) {
+	console.log('/registerForm 패스 요청됨.');
+	
+	// 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
+    console.log('req.user 객체의 값');
+	console.dir(req.user);
+    
+    // 인증 안된 경우
+    if (!req.user) {
+        console.log('사용자 인증 안된 상태임.');
+        res.redirect('/');
+        return;
+    }
+	
+	// 
+	if (Array.isArray(req.user)) {
+		res.render('registerForm.ejs', {user: req.user[0]._doc});
+	} else {
+		res.render('registerForm.ejs', {user: req.user});
+	}
+});
+
+
 // 회원가입 - POST로 요청받으면 패스포트를 이용해 회원가입 유도함
 // 인증 확인 후, 성공 시 /profile 리다이렉트, 실패 시 /signup으로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
 router.route('/signup').post(passport.authenticate('local-signup', {
-    successRedirect : '/profile', 
+    successRedirect : '/', 
     failureRedirect : '/signup', 
     failureFlash : true 
 }));
+
+
 
 // 프로필 화면 - 로그인 여부를 확인할 수 있도록 먼저 isLoggedIn 미들웨어 실행
 router.route('/profile').get(function(req, res) {
@@ -140,20 +204,76 @@ router.route('/profile').get(function(req, res) {
         return;
     }
 	
+<<<<<<< Updated upstream
     // 인증된 경우
     console.log('사용자 인증된 상태임.');
 	if (Array.isArray(req.user)) {
 		res.render('profile.ejs', {user: req.user[0]._doc});
 	} else {
 		res.render('profile.ejs', {user: req.user});
+=======
+//	console.log("로그인 한 사람의 클래스: "+req.user.classCode)
+	
+	// 인증된 경우
+	/****** classCode *****
+	1. 대학생
+	2. 대회주최자
+	3. 시상인증자
+	4. 기업
+	**********************/
+    console.log('사용자 인증된 상태임.');
+	var query;
+	switch(req.user.classCode) {
+		case "대학생":			//student
+			console.log('이름: '+req.user.name);
+			query = '{"select_student":[{"student_id":"'+req.user.email+'"}]}';
+			socket.write(query);		// 유저 아이디
+			
+//			console.log(payload);	// 받은거 출력 확인
+			if (Array.isArray(req.user)) {
+				res.render('profile/student.ejs', {user: req.user[0]._doc, payload: payload});
+			} else {
+				res.render('profile/student.ejs', {user: req.user, payload: payload});
+			} break;
+			
+		case "대회주최자":		//host
+			console.log('이름: '+req.user.name);
+			query = '{"select_host":[{"host_id":"'+req.user.email+'"}]}';
+			socket.write(query);
+			
+			if (Array.isArray(req.user)) {
+				res.render('profile/host.ejs', {user: req.user[0]._doc, payload: payload});
+			} else {
+				res.render('profile/host.ejs', {user: req.user, payload: payload});
+			} break;
+			
+		case "시상인증자":			
+			console.log('이름: '+req.user.name);
+			query = '{"select_authorizer":[{"authorizer_id":"'+req.user.email+'"}]}';
+			socket.write(query);
+
+			if (Array.isArray(req.user)) {
+				res.render('profile/authorizer.ejs', {user: req.user[0]._doc, payload: payload});
+			} else {
+				res.render('profile/authorizer.ejs', {user: req.user, payload: payload});
+			} break;
+			
+		case "기업":
+			console.log('이름: '+req.user.name);
+			if (Array.isArray(req.user)) {
+				res.render('profile/company.ejs', {user: req.user[0]._doc});
+			} else {
+				res.render('profile/company.ejs', {user: req.user});
+			} break;
+>>>>>>> Stashed changes
 	}
 });
 
 // 로그아웃 - 로그아웃 요청 시 req.logout() 호출함
 router.route('/logout').get(function(req, res) {
 	console.log('/logout 패스 요청됨.');
-    
 	req.logout();
+	payload = "";		// 로그아웃시, 해당 계정에 대한 payload 정보 삭제
 	res.redirect('/');
 });
 
@@ -237,8 +357,6 @@ passport.use('local-signup', new LocalStrategy({
 
 	}));
 
-
-
 // 사용자 인증 성공 시 호출
 // 사용자 정보를 이용해 세션을 만듦
 // 로그인 이후에 들어오는 요청은 deserializeUser 메소드 안에서 이 세션을 확인할 수 있음
@@ -306,3 +424,5 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 	database.init(app, config);
    
 });
+
+
