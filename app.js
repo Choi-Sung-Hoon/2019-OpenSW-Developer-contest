@@ -138,12 +138,46 @@ router.route('/registerForm').get(function(req, res) {
 	}
 });
 
+// 등록 Form 전부 완성 후, 확인버튼
+router.route('/registerForm_confirm').post(function(req, res){
+	console.log('enter-form 안에서 작동');
+	
+	// 쿼리문을 위한 변수들
+	var student_id = req.body.student_id || req.query.student_id;
+	var host_id = req.body.host_id || req.query.host_id;
+	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
+	var student_organization = req.body.student_organization || req.query.student_organization;
+	var contest_title = req.body.contest_title || req.query.contest_title;
+	var contest_category = req.body.contest_category || req.query.contest_category;
+	var date = req.body.date || req.query.date;
+	var project_title = req.body.project_title || req.query.project_title;
+	var awarded = req.body.awarded || req.query.awarded;
+	var prize_name = req.body.prize_name || req.query.prize_name;
+	
+	// insert 폼에 맞게 쿼리문 작성
+	var query = '{"insert":[{"student_id":"'+student_id
+				+'","host_id":"'+host_id
+				+'","authorizer_id":"'+authorizer_id
+				+'","student_organization":"'+student_organization
+				+'","contest_title":"'+contest_title
+				+'","contest_category":"'+contest_category
+				+'","date":"'+date
+				+'","project_title":"'+project_title
+				+'","awarded":"'+awarded
+				+'","awarded":"'+prize_name + '}]}';
+	
+	// 쿼리문 출력
+//	console.log(query);
+	// 등록 완료후, 쿼리문 쓰고 프로필 페이지로 이동
+	var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
+    writeData(socket, query);
+});
 
 // 회원가입 - POST로 요청받으면 패스포트를 이용해 회원가입 유도함
 // 인증 확인 후, 성공 시 /profile 리다이렉트, 실패 시 /signup으로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
 router.route('/signup').post(passport.authenticate('local-signup', {
-    successRedirect : '/profile', 
+    successRedirect : '/', 
     failureRedirect : '/signup', 
     failureFlash : true 
 }));
@@ -179,14 +213,14 @@ router.route('/profile').get(function(req, res) {
 	switch(req.user.classCode) {
 		case "대학생":
             var query = '{"select_student":[{"student_id":"'+req.user.email+'"}]}';
-            var socket = getConnection(9246, "localhost", "socket", res, req, 'profile/student.ejs');
+            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/student.ejs');
             writeData(socket, query);
 			break;
 			
 		case "대회주최자":
 			console.log('이름: '+req.user.name);
             var query = '{"select_student":[{"student_id":"'+req.user.email+'"}]}';
-            var socket = getConnection(9246, "localhost", "socket", res, req, 'profile/host.ejs');
+            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
             writeData(socket, query);
             break;
 			

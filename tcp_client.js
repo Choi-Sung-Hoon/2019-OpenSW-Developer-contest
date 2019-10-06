@@ -10,7 +10,7 @@ exports.getConnection = function getConnection(portNum, hostIP, connName, res, r
         this.on('data', function(data) {
             reply = data.toString();
             console.log(connName + " From Server: " + reply);
-            var payloads = JSON.parse(reply).payload;
+            var payloads = JSON.parse(reply).record;
             console.log(payloads)
             res.writeHead('200', { 'Content-Type': 'text/html;charset=utf8' });
             
@@ -21,7 +21,7 @@ exports.getConnection = function getConnection(portNum, hostIP, connName, res, r
                     console.error('뷰 렌더링 중 에러 발생 : ' + err.stack);
                     return;
                 }
-                console.log('rendered : ' + html);
+//                console.log('rendered : ' + html);
                 res.end(html);
             });
             //this.end();
