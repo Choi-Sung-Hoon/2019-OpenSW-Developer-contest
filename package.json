@@ -1,24 +1,24 @@
 {
-  "name": "nodejs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "ch01_test0.js",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.4",
-    "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
-    "express-error-handler": "^1.1.0",
-    "express-session": "^1.16.2",
-    "http": "0.0.0",
-    "mongodb": "^3.3.2",
-    "path": "^0.12.7",
-    "serve-static": "^1.14.1"
-  },
-  "devDependencies": {},
+  "name": "CCMS",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.2",
+    "errorhandler": "^1.4.3",
+    "express": "^4.14.0",
+    "express-error-handler": "^1.1.0",
+    "express-session": "^1.14.2",
+    "mongoose": "^4.6.6",
+    "net": "^1.0.2",
+    "node-java": "^1.0.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "serve-static": "^1.11.2"
+  }
 }

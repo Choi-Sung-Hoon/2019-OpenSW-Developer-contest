@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v4.10.15, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <link rel="shortcut icon" href="./assets/images/logo2.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../public/assets/images/logo2.png" type="image/x-icon">
     <meta name="description" content="Web Builder Description">
     <title>CCMS, 투명한 스펙 관리에 앞장섭니다.</title>
-    <link rel="stylesheet" href="./assets/web/assets/mobirise-icons/mobirise-icons.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="./assets/tether/tether.min.css">
-    <link rel="stylesheet" href="./assets/dropdown/css/style.css">
-    <link rel="stylesheet" href="./assets/theme/css/style.css">
-    <link rel="preload" as="style" href="./assets/mobirise/css/mbr-additional.css">
-    <link rel="stylesheet" href="./assets/mobirise/css/mbr-additional.css" type="text/css">
+    <link rel="stylesheet" href="../public/assets/web/assets/mobirise-icons/mobirise-icons.css">
+    <link rel="stylesheet" href="../public/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/assets/bootstrap/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../public/assets/bootstrap/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../public/assets/tether/tether.min.css">
+    <link rel="stylesheet" href="../public/assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="../public/assets/theme/css/style.css">
+    <link rel="preload" as="style" href="ssets/mobirise/css/mbr-additional.css">
+    <link rel="stylesheet" href="../public/assets/mobirise/css/mbr-additional.css" type="text/css">
 </head>
 
 <body>
@@ -51,7 +51,7 @@
                     </li>
                 </ul>
                 <div class="navbar-buttons mbr-section-btn">
-				<a class="btn btn-sm btn-primary-outline display-4" href="./signin.html">로그인을 해주세요</a></div>
+				<a class="btn btn-sm btn-primary-outline display-4" href="#next">로그인을 해주세요</a></div>
             </div>
         </nav>
     </section>
@@ -63,7 +63,7 @@
             <div class="media-container-column mbr-white col-lg-8 col-md-10">
                 <h1 class="mbr-section-title align-left mbr-bold pb-3 mbr-fonts-style display-1">당신의 수상 내역을 확인해보세요</h1>
                 <p class="mbr-text align-left pb-3 mbr-fonts-style display-5">이제는 공모전과 같은 대회 참여 및 수상 기록을 <br>자신이 일일이 따로 관리하지 않아도 됩니다. <br>주최측에서 직접 등록한 당신의 스펙을 <br>지금 바로 확인해보세요.&nbsp;</p>
-                <div class="mbr-section-btn align-left"><a class="btn btn-md btn-primary display-4" href="./signup.html">회원 가입</a>
+                <div class="mbr-section-btn align-left"><a class="btn btn-md btn-primary display-4" href="/signup">회원 가입</a>
                     <a class="btn btn-md btn-black-outline display-4 mbr-arrow" href="#next">로그인</a></div>
 			</div>
         </div>
@@ -78,17 +78,20 @@
                     <div class="form-container">
                         <div class="media-container-column" data-form-type="formoid">
                             <!---Formbuilder Form--->
-                            <form action="/process/login" method="POST" class="mbr-form form-with-styler" data-form-title="Mobirise Form">
-							<input type="hidden" name="email" data-form-email="true" value="PyLeYSyR+Ry0Ewdg4Yzt8j8jjXvq5LnEENJqvl9aTu6+8oJWSaWtqny8kuxbCeCjPlJ4Ryl4Kp+pnWgXmwIuNNZO36+H6txjDRcBfNC2xOlfkiRm/FtY3RHwZoqqyooU">
+                            <form action="/login" method="POST" class="mbr-form form-with-styler" data-form-title="Mobirise Form">
                                 <div class="row">
-                                    <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
                                     <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">
                                     </div>
                                 </div>
                                 <div class="dragArea row">
                                     <div class="col-md-12 form-group " data-for="name">
-                                        <input type="text" name="id" placeholder="아이디" data-form-field="ID" required="required" class="form-control px-3 display-7" id="id-header15-p">
-                                    </div>
+										<!-- 인증 처리 후 메시지가 있으면 메시지 표시 -->
+									<% if (message.length > 0) { %>
+										<div class="alert alert-danger" style="text-align:left;"><%= message %></div>
+									<% } %>
+
+                                        <input type="text" name="email" placeholder="아이디" data-form-field="ID" required="required" class="form-control px-3 display-7" id="id-header15-p">
+                                    </div>`
                                     <div class="col-md-12 form-group " data-for="email">
                                         <input type="password" name="password" placeholder="비밀번호" data-form-field="Email" required="required" class="form-control px-3 display-7" id="pw-header15-p">
                                     </div>
@@ -103,17 +106,17 @@
             </div>
         </div>
     </section>
-    <script src="./assets/web/assets/jquery/jquery.min.js"></script>
-    <script src="./assets/popper/popper.min.js"></script>
-    <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./assets/smoothscroll/smooth-scroll.js"></script>
-    <script src="./assets/tether/tether.min.js"></script>
-    <script src="./assets/dropdown/js/nav-dropdown.js"></script>
-    <script src="./assets/dropdown/js/navbar-dropdown.js"></script>
-    <script src="./assets/touchswipe/jquery.touch-swipe.min.js"></script>
-    <script src="./assets/parallax/jarallax.min.js"></script>
-    <script src="./assets/theme/js/script.js"></script>
-    <!--<script src="public/assets/formoid/formoid.min.js"></script>-->
+    <script src="../public/assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="../public/assets/popper/popper.min.js"></script>
+    <script src="../public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/assets/smoothscroll/smooth-scroll.js"></script>
+    <script src="../public/assets/tether/tether.min.js"></script>
+    <script src="../public/assets/dropdown/js/nav-dropdown.js"></script>
+    <script src="../public/assets/dropdown/js/navbar-dropdown.js"></script>
+    <script src="../public/assets/touchswipe/jquery.touch-swipe.min.js"></script>
+    <script src="../public/assets/parallax/jarallax.min.js"></script>
+    <script src="../public/assets/theme/js/script.js"></script>
+    <!--<script src="assets/formoid/formoid.min.js"></script>-->
 </body>
 
 </html>
