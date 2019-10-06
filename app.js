@@ -144,7 +144,7 @@ router.route('/registerForm_confirm').post(function(req, res){
 	
 	// 쿼리문을 위한 변수들
 	var student_id = req.body.student_id || req.query.student_id;
-	var host_id = req.body.host_id || req.query.host_id;
+	var host_id = req.user.email;
 	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
 	var student_organization = req.body.student_organization || req.query.student_organization;
 	var contest_title = req.body.contest_title || req.query.contest_title;
@@ -164,13 +164,14 @@ router.route('/registerForm_confirm').post(function(req, res){
 				+'","date":"'+date
 				+'","project_title":"'+project_title
 				+'","awarded":"'+awarded
-				+'","awarded":"'+prize_name + '}]}';
+				+'","prize_name":"'+prize_name + '"}]}';
 	
 	// 쿼리문 출력
 //	console.log(query);
 	// 등록 완료후, 쿼리문 쓰고 프로필 페이지로 이동
 	var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
     writeData(socket, query);
+	res.redirect('/profile')
 });
 
 // 회원가입 - POST로 요청받으면 패스포트를 이용해 회원가입 유도함
@@ -219,7 +220,7 @@ router.route('/profile').get(function(req, res) {
 			
 		case "대회주최자":
 			console.log('이름: '+req.user.name);
-            var query = '{"select_student":[{"student_id":"'+req.user.email+'"}]}';
+            var query = '{"select_host":[{"host_id":"'+req.user.email+'"}]}';
             var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
             writeData(socket, query);
             break;
