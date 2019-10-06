@@ -174,6 +174,29 @@ router.route('/registerForm_confirm').post(function(req, res){
 	res.redirect('/profile')
 });
 
+// 인증 완료 버튼 클릭시, 쿼리 전송 후 화면 업데이트
+router.route('/verify').post(function(req, res){
+	console.log('verify 안에서 작동');
+	
+	// 쿼리문을 위한 변수들
+	var student_id = req.body.student_id || req.query.student_id;
+	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
+	var contest_title = req.body.contest_title || req.query.contest_title;
+	
+	// insert 폼에 맞게 쿼리문 작성
+	var query = '{"update_author":[{'
+				+'","contest_title":"'+contest_title + '"}]}';
+				+'"student_id":"'+student_id
+				+'","authorizer_id":"'+authorizer_id
+	
+	// 쿼리문 출력
+//	console.log(query);
+	// 등록 완료후, 쿼리문 쓰고 프로필 페이지로 이동
+	var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
+    writeData(socket, query);
+	res.redirect('/profile')
+});
+
 // 회원가입 - POST로 요청받으면 패스포트를 이용해 회원가입 유도함
 // 인증 확인 후, 성공 시 /profile 리다이렉트, 실패 시 /signup으로 리다이렉트함
 // 인증 실패 시 검증 콜백에서 설정한 플래시 메시지가 응답 페이지에 전달되도록 함
@@ -217,31 +240,28 @@ router.route('/profile').get(function(req, res) {
             var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/student.ejs');
             writeData(socket, query);
 			break;
-			
+
 		case "대회주최자":
 			console.log('이름: '+req.user.name);
             var query = '{"select_host":[{"host_id":"'+req.user.email+'"}]}';
             var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/host.ejs');
             writeData(socket, query);
             break;
-			
+
 		case "시상인증자":
 			console.log('이름: '+req.user.name);
-			if (Array.isArray(req.user)) {
-				res.render('profile/authorizer.ejs', {user: req.user[0]._doc});
-			} else {
-				res.render('profile/authorizer.ejs', {user: req.user});
-			} break;
-			
+			var query = '{"select_authorizer":[{"authorizer_id":"'+req.user.email+'"}]}';
+            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/authorizer.ejs');
+            writeData(socket, query);
+            break;
+
 		case "기업":
 			console.log('이름: '+req.user.name);
-			if (Array.isArray(req.user)) {
-				res.render('profile/company.ejs', {user: req.user[0]._doc});
-			} else {
-				res.render('profile/company.ejs', {user: req.user});
-			} break;
+			var query = '{"select_company":[{"company_id":"'+req.user.email+'"}]}';
+            var socket = getConnection(2227, "192.168.43.249", "socket", res, req, 'profile/company.ejs');
+            writeData(socket, query);
+            break;
 	}
-
 });
 
 // 로그아웃 - 로그아웃 요청 시 req.logout() 호출함
