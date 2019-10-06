@@ -176,9 +176,12 @@ router.route('/verify').post(function(req, res){
 	console.log('verify 안에서 작동');
 	
 	// 쿼리문을 위한 변수들
-	var student_id = req.body.student_id || req.query.student_id;
+	var student_id = req.payload.;
 	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
 	var contest_title = req.body.contest_title || req.query.contest_title;
+//	var student_id = req.body.student_id || req.query.student_id;
+//	var authorizer_id = req.body.authorizer_id || req.query.authorizer_id;
+//	var contest_title = req.body.contest_title || req.query.contest_title;
 	
 	// insert 폼에 맞게 쿼리문 작성
 	var query = '{"update_author":[{'
